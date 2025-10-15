@@ -1,26 +1,37 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TaskList from "./TaskList";
-import { TaskContext } from "../context/TaskContext";
 
+/**
+ * SearchBar component that provides a search input to filter tasks.
+ * @component SearchBar
+ * @returns {JSX.Element} The rendered SearchBar component.
+ */
 function SearchBar() {
-  const [query, setQuery] = useState("");
+    
+    // State to hold the search query
+    const [query, setQuery] = useState("");
+    const inputRef = useRef(null);
 
-  function handleSearch(e) {
-    setQuery(e.target.value);
-  }
+    // Handle input change
+    const handleSearch = (e) => setQuery(e.target.value);
 
+    // Auto-focus the input when the form mounts
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
 
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search tasks..."
-        value={query}
-        onChange={handleSearch}
-      />
-      <TaskList query={query}/>
-    </div>
-  );
+    return (
+        <div className="search-container">
+            <input
+                type="text"
+                placeholder="Search tasks..."
+                value={query}
+                ref={inputRef}
+                onChange={handleSearch}
+            />
+            <TaskList query={query} />
+        </div>
+    );
 }
 
 export default SearchBar;

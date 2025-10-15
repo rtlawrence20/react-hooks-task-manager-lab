@@ -1,25 +1,23 @@
-import React, { useEffect, useContext, useState } from "react";
-import { TaskContext } from "../context/TaskContext";
+import React from "react";
 import TaskForm from "./TaskForm";
 import SearchBar from "./SearchBar";
+import { TaskProvider } from "../context/TaskContext";
 
+/**
+ * App component that serves as the main entry point for the Task Manager application.
+ * @component App
+ * @returns {JSX.Element} The rendered App component.
+ */
 function App() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:6001/tasks')
-    .then(r=>r.json())
-    .then(data=>setTasks(data))
-    
-  }, []);
-
-  return (
-    <div>
-      <h1>Task Manager</h1>
-      <TaskForm />
-      <SearchBar />
-    </div>
-  );
+    return (
+        <TaskProvider>
+            <div className="container">
+                <h1>Task Manager</h1>
+                <TaskForm />
+                <SearchBar />
+            </div>
+        </TaskProvider>
+    );
 }
 
 export default App;
